@@ -1,36 +1,68 @@
 import streamlit as st
 import pandas as pd
 import os
-import matplotlib.pyplot as plt
+import sys
+import plotly.graph_objects as go
 
-st.title("🪙 Gold Price Prediction Dashboard")
-
-# Path setup
+# Fix Python path to access src
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, ".."))
-file_path = os.path.join(ROOT_DIR, "outputs", "predictions.csv")
+sys.path.append(ROOT_DIR)
 
-# Load data
-if os.path.exists(file_path):
-    data = pd.read_csv(file_path)
+st.title("🪙 Gold Trading Dashboard")
 
-    # Fix alignment
-    data = data.reset_index(drop=True)
+# Load processed data
+data_path = os.path.join(ROOT_DIR, "data", "gold_data.csv")
+if not os.path.exists(data_path):
+    st.error("❌ Run main.py first!")
+    st.stop()
 
-    st.subheader("📊 Prediction vs Actual")
+data = pd.read_csv(data_path)
 
-    # 🔥 MATPLOTLIB CHART
-    fig, ax = plt.subplots(figsize=(10,5))
+# Ensure numeric
+data['Close'] = pd.to_numeric(data['Close'], errors='coerce')
 
-    ax.plot(data['Actual'].values, label='Actual')
-    ax.plot(data['Predicted'].values, label='Predicted')
+# Check signals exist
+if 'Signal' not in data.columns:
+    st.error("❌ Run main.py again!")
+    st.stop()
 
-    ax.set_title("Gold Price Prediction")
-    ax.set_xlabel("Data Points")
-    ax.set_ylabel("Price")
-    ax.legend()
+data = data.dropna().reset_index(drop=True)
 
-    st.pyplot(fig)
+# Candlestick chart
+fig = go.Figure(data=[go.Candlestick(
+    x=data.index,
+    open=data['Open'],
+    high=data['High'],
+    low=data['Low'],
+    close=data['Close']
+)])
 
-else:
-    st.error("❌ Run main.py first to generate predictions.csv")
+# BUY signals
+buy = data[data['Signal'] == 'BUY']
+fig.add_trace(go.Scatter(
+    x=buy.index,
+    y=buy['Close'],
+    mode='markers',
+    name='BUY',
+    marker=dict(symbol='triangle-up', size=10)
+))
+
+# SELL signals
+sell = data[data['Signal'] == 'SELL']
+fig.add_trace(go.Scatter(
+    x=sell.index,
+    y=sell['Close'],
+    mode='markers',
+    name='SELL',
+    marker=dict(symbol='triangle-down', size=10)
+))
+
+st.plotly_chart(fig)
+
+# Backtesting summary
+st.subheader("💰 Backtesting Result")
+initial = 10000.0
+final = float(data['Close'].iloc[-1])
+st.write(f"Initial Balance: ${initial:.2f}")
+st.write(f"Final Price: ${final:.2f}")
