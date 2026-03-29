@@ -1,4 +1,4 @@
-from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 
 def get_model():
-    return LinearRegression()
+    return RandomForestRegressor(n_estimators=100)

@@ -1,25 +1,42 @@
-# 📈 Gold Price Prediction using Machine Learning
+# 🪙 Gold Price Prediction (XAUUSD)
 
-This project focuses on predicting gold prices using historical data and machine learning techniques. It uses financial data along with technical indicators to train a regression model and generate predictions.
+A Machine Learning-based project to predict Gold prices (XAUUSD) using technical indicators and visualize results with an interactive dashboard.
 
 ---
 
-## 🚀 Features
+## 🚀 Project Overview
 
-* 📊 Fetches real-time historical gold price data using `yfinance`
-* 📉 Adds technical indicators (Moving Averages, Returns)
-* 🤖 Trains a Machine Learning model (Linear Regression)
-* 📏 Evaluates model performance using Mean Squared Error (MSE)
-* 🔮 Predicts future gold prices
+This project uses historical gold price data along with technical indicators like **RSI, MACD, and Moving Averages** to train machine learning models and predict future prices.
+
+It also includes a **Streamlit dashboard** to visualize predictions vs actual prices.
+
+---
+
+## 🎯 Features
+
+* 📊 Gold price prediction using ML models
+* 📈 Technical Indicators:
+
+  * Moving Average (MA50)
+  * RSI (Relative Strength Index)
+  * MACD
+* 🤖 Model Used:
+
+  * Random Forest Regressor
+* 📉 Prediction vs Actual comparison chart
+* 🖥️ Interactive Streamlit Dashboard
+* 💾 CSV export of predictions
 
 ---
 
 ## 🧠 Tech Stack
 
 * Python
-* pandas
-* numpy
-* scikit-learn
+* Pandas
+* NumPy
+* Scikit-learn
+* Matplotlib
+* Streamlit
 * yfinance
 
 ---
@@ -27,35 +44,65 @@ This project focuses on predicting gold prices using historical data and machine
 ## 📁 Project Structure
 
 ```
-project/
+gold-price-prediction/
 │
-├── data/                  # Dataset storage (not pushed to GitHub)
+├── data/
+├── outputs/
+│   └── predictions.csv
 │
 ├── src/
-│   ├── data_loader.py     # Fetches data
-│   ├── indicators.py      # Adds technical indicators
-│   ├── model.py           # ML model
-│   ├── train.py           # Training logic
-│   └── predict.py         # Prediction logic
+│   ├── data_loader.py
+│   ├── indicators.py
+│   ├── signals.py
+│   ├── model.py
+│   ├── train.py
+│   └── predict.py
 │
-├── main.py                # Entry point
-├── requirements.txt       # Dependencies
-├── README.md              # Project documentation
-└── .gitignore             # Ignore unnecessary files
+├── app/
+│   └── app.py
+│
+├── main.py
+└── requirements.txt
 ```
 
 ---
 
 ## ⚙️ Installation
 
-1. Clone the repository:
+### 1️⃣ Clone the repository
 
 ```
 git clone https://github.com/your-username/gold-price-prediction.git
 cd gold-price-prediction
 ```
 
-2. Install dependencies:
+---
+
+### 2️⃣ Create Virtual Environment
+
+```
+python -m venv .venv
+```
+
+---
+
+### 3️⃣ Activate Environment
+
+**Windows (PowerShell):**
+
+```
+.\.venv\Scripts\Activate.ps1
+```
+
+If error occurs:
+
+```
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+---
+
+### 4️⃣ Install Dependencies
 
 ```
 pip install -r requirements.txt
@@ -63,69 +110,91 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ Usage
+## ▶️ How to Run
 
-Run the project:
+### Step 1: Run ML Pipeline
 
 ```
 python main.py
 ```
 
----
-
-## 📊 How It Works
-
-1. Data is fetched using Yahoo Finance API
-2. Technical indicators like:
-
-   * Moving Average (MA50, MA200)
-   * Daily Returns
-     are added
-3. Data is split into training and testing sets
-4. A Linear Regression model is trained
-5. Predictions are made and evaluated using MSE
-
----
-
-## 📉 Example Output
+👉 This generates:
 
 ```
-MSE: 123.45
+outputs/predictions.csv
 ```
 
 ---
 
-## 🔧 Future Improvements
+### Step 2: Run Dashboard
 
-* Add advanced models (Random Forest, XGBoost)
-* Hyperparameter tuning
-* Add visualization (matplotlib, seaborn)
-* Deploy as a web app (Flask/Streamlit)
-* Add real-time prediction system
+```
+streamlit run app/app.py
+```
 
 ---
 
-## 🤝 Contributing
+## 📊 Output
 
-Contributions are welcome! Feel free to fork the repo and submit a pull request.
-
----
-
-## 📜 License
-
-This project is open-source and available under the MIT License.
+* 📈 Prediction vs Actual chart
+* 📁 predictions.csv file
+* 📊 Clean visualization using Matplotlib
 
 ---
 
-## 🙌 Acknowledgements
+## ⚠️ Common Errors & Fixes
 
-* Yahoo Finance for financial data
-* scikit-learn for ML tools
+### ❌ FileNotFoundError
+
+👉 Run `main.py` before dashboard
+
+---
+
+### ❌ No module named matplotlib
+
+```
+pip install matplotlib
+```
 
 ---
 
-## 📬 Contact
+### ❌ PowerShell Execution Error
 
-If you have any questions or suggestions, feel free to reach out!
+```
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
 
 ---
+
+## 💡 Future Improvements
+
+* 📊 Candlestick charts (TradingView style)
+* 🟢 Buy/Sell signals visualization
+* 💰 Backtesting system (profit, win rate)
+* 🤖 Deep Learning (LSTM model)
+* 📡 Live price integration
+
+---
+
+## 🧑‍💻 Author
+
+**Ansh Suhagiya**
+
+* Trader 📈
+* IT Student 💻
+* Machine Learning Enthusiast 🤖
+
+---
+
+## ⭐ Why This Project?
+
+This project demonstrates:
+
+* Real-world financial data handling
+* Machine learning implementation
+* Data visualization skills
+* End-to-end project development
+
+---
+
+🔥 *This project is a strong portfolio piece for ML + Finance roles*
