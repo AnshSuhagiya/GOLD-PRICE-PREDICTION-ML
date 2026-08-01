@@ -19,7 +19,7 @@ def load_data(symbol="GC=F", start="2015-01-01", save=False):
     pandas.DataFrame: Historical OHLCV data
     """
 
-    data = yf.download(symbol, start=start)
+    data = yf.download(symbol, start=start, multi_level_index=False)
 
     if save:
         data.to_csv("data/gold_data.csv")
